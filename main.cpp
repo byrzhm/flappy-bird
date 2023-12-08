@@ -2,12 +2,21 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <iostream>
+#include <thread>
+#include <chrono>
+
+using namespace std::literals::chrono_literals;
 
 #include "bird.h"
 #include "pipe_spawner.h"
+#include "background.h"
+#include "score_board.h"
 
-const float GRAVITY = 100.0f;
-const float JUMP_VELOCITY = 150.0f;
+enum class GameState
+{
+  Playing,
+  GameOver
+};
 
 int main()
 {
@@ -30,31 +39,17 @@ int main()
       "Flappy Bird",
       sf::Style::Titlebar | sf::Style::Close);
 
-  sf::Texture backgroundTexture;
-  if (!backgroundTexture.loadFromFile(settings["background_img_path"]))
-  {
-    return EXIT_FAILURE;
-  }
-  sf::Sprite background(backgroundTexture);
-  float scaleX = screenWidth / background.getGlobalBounds().getSize().x;
-  float scaleY = screenHeight / background.getGlobalBounds().getSize().y;
-  background.setScale(scaleX, scaleY);
+  ZHMGAME001::Backgound background(settings);
+  ZHMGAME001::Bird bird(settings);
+  ZHMGAME001::PipeSpawner pipeSpawner(settings);
+  ZHMGAME001::ScoreBoard scoreBoard(settings);
 
-  sf::Texture texture;
-  if (!texture.loadFromFile(settings["bird_img_path"]))
-  {
-    return EXIT_FAILURE;
-  }
-
-  sf::Sprite bird(texture);
-  bird.setScale(0.2f, 0.2f);
-  sf::Vector2f birdSize = bird.getGlobalBounds().getSize();
-  bird.setPosition((screenWidth - birdSize.x) / 2, (screenHeight - birdSize.y) / 2);
-
-  float velocityY = 0.0f;
-  float positionY = bird.getPosition().y;
+  bird.start();
+  pipeSpawner.start();
+  scoreBoard.start();
 
   sf::Clock clock;
+  GameState gameState = GameState::Playing;
 
   while (window.isOpen())
   {
@@ -68,31 +63,37 @@ int main()
       }
       else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
       {
-        velocityY = -JUMP_VELOCITY;
+        bird.flap();
+      }
+      else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R)
+      {
+        gameState = GameState::Playing;
+        bird.start();
+        pipeSpawner.start();
+        clock.restart();
       }
     }
 
-    sf::Time deltaTime = clock.restart();
-    velocityY = velocityY + GRAVITY * deltaTime.asSeconds();
-    positionY = positionY + velocityY * deltaTime.asSeconds();
+    if (gameState == GameState::Playing) {
+      sf::Time deltaTime = clock.restart();
 
-    if (positionY > screenHeight - birdSize.y)
-    {
-      positionY = screenHeight - birdSize.y;
-      velocityY = 0.0f;
-    }
-    else if (positionY < 0)
-    {
-      positionY = 0;
-      velocityY = 0.0f;
+      bird.update(deltaTime);
+      pipeSpawner.update(deltaTime);
+      scoreBoard.update(pipeSpawner.getScore());
+
+      if (bird.isColliding(pipeSpawner.getMiddleTopCollisionRect())
+        || bird.isColliding(pipeSpawner.getMiddleBottomCollisionRect()))
+      {
+        gameState = GameState::GameOver;
+      }
     }
 
-    bird.setPosition(bird.getPosition().x, positionY);
-    // std::cout << bird.getPosition().y << std::endl;
 
     window.clear();
     window.draw(background);
     window.draw(bird);
+    window.draw(pipeSpawner);
+    window.draw(scoreBoard);
     window.display();
   }
 }

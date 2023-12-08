@@ -5,22 +5,31 @@
 
 namespace ZHMGAME001 {
 
-class Pipe {
+class Pipe : public sf::Drawable, public sf::Transformable {
 public:
   Pipe() = default;
-  Pipe(const nlohmann::json &settings, const sf::Texture &texture);
+  explicit Pipe(const nlohmann::json &settings);
 
   void start();
 
-  void update();
+  void update(const sf::Time &deltaTime);
 
-  void draw(sf::RenderWindow &window);
+  void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  sf::FloatRect getBounds() const;
+  bool isOffScreen() const;
+
+  sf::Vector2f getBottomRightPosition() const;
+
+  sf::RectangleShape getTopCollisionRect() const;
+
+  sf::RectangleShape getBottomCollisionRect() const;
 
 private:
-  sf::Sprite sprite_;
-  sf::Vector2f velocity_;
+  sf::Texture texture_;
+  sf::Sprite topSprite_;
+  sf::Sprite bottomSprite_;
+  sf::RectangleShape topCollisionRect_;
+  sf::RectangleShape bottomCollisionRect_;
 };
 
 } // namespace ZHMGAME001

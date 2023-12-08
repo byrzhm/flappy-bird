@@ -1,4 +1,5 @@
 Checks: '*,
+         -fuchsia-multiple-inheritance
          -altera-id-dependent-backward-branch,
          -altera-struct-pack-align,
          -altera-unroll-loops,

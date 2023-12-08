@@ -2,5 +2,7 @@
   "width": 800,
   "height": 600,
   "bird_img_path": "assets/images/birdbody.png",
-  "background_img_path": "assets/images/background.png"
+  "background_img_path": "assets/images/background.png",
+  "pipe_img_path": "assets/images/pipe.png",
+  "font": "assets/fonts/Phoen.ttf"
 }

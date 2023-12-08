@@ -1,9 +1,15 @@
 add_library(FLAPPY_BIRD_LIB STATIC
-  flappy_bird.cpp
+  bird.cpp
+  pipe.cpp
+  pipe_spawner.cpp
+  background.cpp
+  score_board.cpp
+  game.cpp
 )
 
 target_link_libraries(FLAPPY_BIRD_LIB
   PRIVATE sfml-system sfml-network sfml-graphics sfml-window
+  PRIVATE glm::glm
 )
 
 
