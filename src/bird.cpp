@@ -3,20 +3,20 @@
 
 #include "bird.h"
 
-static float screenWidth = 0.0f;
-static float screenHeight = 0.0f; 
 static float maxHeight = 0.0f;
 
 namespace ZHMGAME001 {
+
 const float GRAVITY = 100.0f;
 const float JUMP_VELOCITY = 80.0f;
+
 float birdWidth = 0.0f;
 float birdHeight = 0.0f;
 
-Bird::Bird(const nlohmann::json &settings) {
-  screenWidth = settings["width"];
-  screenHeight = settings["height"];
+extern float screenWidth;
+extern float screenHeight;
 
+Bird::Bird(const nlohmann::json &settings) {
   if (!texture_.loadFromFile(settings["bird_img_path"])) {
     throw std::runtime_error("Failed to load bird image");
   }

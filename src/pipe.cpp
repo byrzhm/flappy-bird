@@ -3,8 +3,6 @@
 
 #include "pipe.h"
 
-static float screenWidth = 0.0f;
-static float screenHeight = 0.0f;
 
 namespace ZHMGAME001 {
 
@@ -12,11 +10,11 @@ const float MAX_HOLE_SIZE = 300.0f;
 const float MIN_HOLE_SIZE = 200.0f;
 const float PIPE_SPEED = 100.0f;
 
+extern float screenWidth;
+extern float screenHeight;
+
 Pipe::Pipe(const nlohmann::json& settings)
 {
-  screenWidth = settings["width"];
-  screenHeight = settings["height"];
-
   if (!texture_.loadFromFile(settings["pipe_img_path"]))
   {
     throw std::runtime_error("Failed to load pipe image");

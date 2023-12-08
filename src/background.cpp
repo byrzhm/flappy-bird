@@ -1,11 +1,10 @@
 #include "background.h"
 
 namespace ZHMGAME001 {
+  extern float screenWidth;
+  extern float screenHeight;
 
 Background::Background(const nlohmann::json &settings) {
-  float screenWidth = settings["width"];
-  float screenHeight = settings["height"];
-
   if (!texture_.loadFromFile(settings["background_img_path"])) {
     throw std::runtime_error("Failed to load background image");
   }
