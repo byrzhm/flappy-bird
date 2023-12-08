@@ -23,7 +23,7 @@ public:
 
   sf::RectangleShape getMiddleBottomCollisionRect() const;
 
-  bool getScore();
+  bool getScored();
 
 private:
   std::deque<Pipe> leftPipes_;

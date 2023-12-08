@@ -19,7 +19,7 @@ void PipeSpawner::start() {
   leftPipes_.clear();
   rightPipes_.clear();
   
-  timeSinceLastSpawn = SPAWN_RATE - 0.5f;
+  timeSinceLastSpawn = SPAWN_RATE; // spawn a pipe immediately
 }
 
 void PipeSpawner::update(const sf::Time& deltaTime) {
@@ -75,7 +75,7 @@ sf::RectangleShape PipeSpawner::getMiddleBottomCollisionRect() const {
   return rightPipes_.front().getBottomCollisionRect();
 }
 
-bool PipeSpawner::getScore() {
+bool PipeSpawner::getScored() {
   bool scored = scored_;
   scored_ = false;
   return scored;

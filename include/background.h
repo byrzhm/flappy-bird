@@ -4,10 +4,12 @@
 #include <nlohmann/json.hpp>
 
 namespace ZHMGAME001 {
-class Backgound : public sf::Drawable {
+class Background : public sf::Drawable {
 public:
-  Backgound() = default;
-  explicit Backgound(const nlohmann::json &settings);
+  Background() = default;
+  explicit Background(const nlohmann::json &settings);
+
+  void start();
 
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

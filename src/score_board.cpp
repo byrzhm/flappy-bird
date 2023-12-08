@@ -1,14 +1,11 @@
 #include "score_board.h"
 
-static float screenWidth = 0.0f;
-static float screenHeight = 0.0f;
-
 namespace ZHMGAME001 {
 
-ScoreBoard::ScoreBoard(const nlohmann::json& settings) {
-  screenWidth = settings["width"];
-  screenHeight = settings["height"];
+extern float screenWidth;
+extern float screenHeight;
 
+ScoreBoard::ScoreBoard(const nlohmann::json& settings) {
   font_.loadFromFile(settings["font"]);
   scoreText_.setFont(font_);
   scoreText_.setCharacterSize(50);

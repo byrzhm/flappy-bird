@@ -2,7 +2,7 @@
 
 namespace ZHMGAME001 {
 
-Backgound::Backgound(const nlohmann::json &settings) {
+Background::Background(const nlohmann::json &settings) {
   float screenWidth = settings["width"];
   float screenHeight = settings["height"];
 
@@ -16,7 +16,9 @@ Backgound::Backgound(const nlohmann::json &settings) {
   sprite_.setScale(scaleX, scaleY);
 }
 
-void Backgound::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void Background::start() {}
+
+void Background::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(sprite_, states);
 }
 
