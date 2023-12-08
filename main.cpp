@@ -1,15 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <nlohmann/json.hpp>
 #include <fstream>
-#include <iostream>
-#include <thread>
-#include <chrono>
-
-using namespace std::literals::chrono_literals;
 
 #include "game.h"
 
+#ifdef _WIN32
+#include <windows.h>
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+#else
 int main()
+#endif
 {
   nlohmann::json settings;
   std::ifstream settingsFile("settings.json");

@@ -64,3 +64,11 @@ WarningsAsErrors: '*'
 
 #HeaderFilterRegex: '.*nlohmann.*'
 HeaderFilterRegex: '.*hpp$'
+
+Analyze:
+  - CheckOptions:
+    - key: 'readability-inconsistent-declaration-parameter-name'
+      value: '0'
+
+    Files:
+      - 'main.cpp'

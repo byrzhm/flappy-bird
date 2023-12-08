@@ -41,6 +41,8 @@ target_include_directories(flappy_bird
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+set_target_properties(flappy_bird PROPERTIES WIN32_EXECUTABLE TRUE)
+
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY settings.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
