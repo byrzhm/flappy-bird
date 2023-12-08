@@ -15,7 +15,7 @@
 
 ```bash
 vcpkg install sfml:x64-windows
-vcpgk install glm:x64-windows
+vcpkg install glm:x64-windows
 vcpkg integrate install
 ```
 
