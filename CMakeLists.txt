@@ -1,11 +1,23 @@
-cmake_minimum_required(VERSION 3.26.0)
+cmake_minimum_required(VERSION 3.10.0...3.26.0)
 project(flappy_bird VERSION 0.1.0 LANGUAGES C CXX)
 
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug)
-endif()
+find_package(Git QUIET)
+if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+    # 如果Git可用并且项目是一个Git仓库，则拉取子模块
+    message(STATUS "Git found, updating submodules")
+    
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        RESULT_VARIABLE GIT_SUBMOD_RESULT
+    )
 
-set(CMAKE_CURRENT_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
+    if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+        message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+    endif()
+else()
+    message(WARNING "Git not found or project is not a Git repository. Submodules will not be updated.")
+endif()
 
 
 find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
@@ -29,8 +41,14 @@ target_include_directories(flappy_bird
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY settings.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY settings.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+file(COPY settings.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/MinSizeRel)
+file(COPY settings.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/MinSizeRel)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/RelWithDebInfo)
+file(COPY settings.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/RelWithDebInfo)
 
 include(CTest)
 enable_testing()
