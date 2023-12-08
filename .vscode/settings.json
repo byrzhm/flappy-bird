@@ -1,0 +1,15 @@
+{
+  // 环境变量中添加 VCPKG_ROOT
+  "cmake.configureSettings": {
+    "CMAKE_TOOLCHAIN_FILE": "${env:VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+    "VCPKG_TARGET_TRIPLET": "x64-windows",
+  },
+  "clangd.fallbackFlags": [
+    "-I",
+    "${env:VCPKG_ROOT}/installed/x64-windows/include",
+    "-I",
+    "${workspaceFolder}/3rdparty/nlohmann/include",
+    "-I",
+    "${workspaceFolder}/include"
+  ]
+}
