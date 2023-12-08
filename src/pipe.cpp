@@ -27,26 +27,22 @@ Pipe::Pipe(const nlohmann::json& settings)
   float scaleY = screenHeight / topSprite_.getGlobalBounds().getSize().y;
 
   topSprite_.setScale(scaleX, scaleY);
-  // topSprite_.setPosition(screenWidth, 0.0f);
 
   bottomSprite_.setTexture(texture_);
   bottomSprite_.setScale(scaleX, scaleY);
   bottomSprite_.setRotation(180.0f);
-  // bottomSprite_.setPosition(screenWidth + bottomSprite_.getGlobalBounds().width, screenHeight);
 
   sf::Vector2f pipeSize = topSprite_.getGlobalBounds().getSize();
   topCollisionRect_.setSize(pipeSize);
-  // topCollisionRect_.setPosition(topSprite_.getPosition());
   topCollisionRect_.setFillColor(sf::Color::Transparent);
-  topCollisionRect_.setOutlineColor(sf::Color::Red);
-  topCollisionRect_.setOutlineThickness(1.0f);
+  // topCollisionRect_.setOutlineColor(sf::Color::Red);
+  // topCollisionRect_.setOutlineThickness(1.0f);
 
   bottomCollisionRect_.setSize(pipeSize);
   bottomCollisionRect_.setOrigin(pipeSize.x, pipeSize.y);
-  // bottomCollisionRect_.setPosition(bottomSprite_.getPosition());
   bottomCollisionRect_.setFillColor(sf::Color::Transparent);
-  bottomCollisionRect_.setOutlineColor(sf::Color::Red);
-  bottomCollisionRect_.setOutlineThickness(1.0f);
+  // bottomCollisionRect_.setOutlineColor(sf::Color::Red);
+  // bottomCollisionRect_.setOutlineThickness(1.0f);
 }
 
 void Pipe::start()

@@ -32,8 +32,8 @@ Bird::Bird(const nlohmann::json &settings) {
   collisionCircle_.setRadius(birdSize.x / 2);
   collisionCircle_.setOrigin(collisionCircle_.getRadius(), collisionCircle_.getRadius());
   collisionCircle_.setFillColor(sf::Color::Transparent);
-  collisionCircle_.setOutlineColor(sf::Color::Red);
-  collisionCircle_.setOutlineThickness(1.0f);
+  // collisionCircle_.setOutlineColor(sf::Color::Red);
+  // collisionCircle_.setOutlineThickness(1.0f);
 }
 
 void Bird::start() {
