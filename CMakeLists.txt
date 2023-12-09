@@ -20,7 +20,7 @@ else()
   message(WARNING "Git not found or project is not a Git repository. Submodules will not be updated.")
 endif()
 
-set(SFML_STATIC_LIBRARIES TRUE)
+# set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
 message(STATUS "SFML_DIR: ${SFML_DIR}")
 message(STATUS "SFML_VERSION: ${SFML_VERSION}")
@@ -44,11 +44,11 @@ target_include_directories(flappy_bird
 
 set_target_properties(flappy_bird PROPERTIES WIN32_EXECUTABLE TRUE)
 
-if(MSVC)
-  # 设置 MSVC 编译器的特定选项
-  # MSVC（Microsoft Visual C++）编译器在默认情况下使用的是多线程动态链接运行时 (/MD)
-  target_compile_options(flappy_bird PRIVATE "/MT")
-endif()
+# if(MSVC)
+#   # 设置 MSVC 编译器的特定选项
+#   # MSVC（Microsoft Visual C++）编译器在默认情况下使用的是多线程动态链接运行时 (/MD)
+#   target_compile_options(flappy_bird PRIVATE "/MT")
+# endif()
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY settings.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)

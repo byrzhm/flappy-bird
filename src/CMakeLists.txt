@@ -18,6 +18,6 @@ target_include_directories(FLAPPY_BIRD_LIB
   PRIVATE ${PROJECT_SOURCE_DIR}/3rdparty/nlohmann/include
 )
 
-if (MSVC) # 设置 MSVC 编译器的特定项
-  target_compile_options(FLAPPY_BIRD_LIB PRIVATE "/MT")
-endif()
+# if (MSVC) # 设置 MSVC 编译器的特定项
+#   target_compile_options(FLAPPY_BIRD_LIB PRIVATE "/MT")
+# endif()
