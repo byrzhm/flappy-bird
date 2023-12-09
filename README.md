@@ -19,6 +19,14 @@ vcpkg install glm:x64-windows
 vcpkg integrate install
 ```
 
+- 如果想要安装静态库, 可以使用以下指令安装
+
+```bash
+vcpkg install sfml:x64-windows-static
+vcpkg install glm:x64-windows-static
+vcpkg integrate install
+```
+
 - 在vscode中安装`CMake Tools`, 并且在当前工作目录下的`.vscode`文件夹下的`settings.json`中添加以下内容\
   如果`intelisense`或`clangd`报错, 可以尝试添加`include`路径
 
@@ -26,7 +34,7 @@ vcpkg integrate install
 {
     "cmake.configureSettings": {
         "CMAKE_TOOLCHAIN_FILE": "${env:VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "VCPKG_TARGET_TRIPLET": "x64-windows", // 如果是静态库, 这里改成x64-windows-static
     }
 }
 ```
@@ -35,7 +43,7 @@ vcpkg integrate install
 
 ## 运行
 
-- 在`build`文件夹下找到`Debug`/`Release`文件夹, 运行`flappy_bird.exe`即可(如果运行没有效果, 可能是缺失了dll文件, 或者是缺失了settings.json中的配置以及assets文件夹)
+- 在`build`文件夹下找到`Debug`/`Release`文件夹, 运行`flappy_bird.exe`即可(如果运行没有效果, 可能是缺失了dll文件(动态链接的情况下), 或者是缺失了`settings.json`中的配置以及`assets`文件夹)
 
 ## 游戏说明
 
