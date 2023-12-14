@@ -62,6 +62,12 @@ file(COPY settings.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/RelWithDebInfo)
 include(CTest)
 enable_testing()
 
+# 生成 msi 安装包
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+set(CPACK_GENERATOR "WIX") # 使用 WiX 作为生成器
+set(CPACK_PACKAGE_EXECUTABLES "flappy_bird" "flappy_bird.exe")
+install(TARGETS flappy_bird DESTINATION .)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/settings.json DESTINATION .)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION .)
 include(CPack)
