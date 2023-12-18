@@ -1,18 +1,32 @@
+/**
+ * @file pipe.cpp
+ * @author Hongming Zhu (zhm1019@qq.com)
+ * @brief 水管类实现
+ * @version 0.1.0
+ * @date 2023-12-18
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include <iostream>
 #include <random>
 
 #include "pipe.h"
 
-
 namespace ZHMGAME001 {
 
-const float MAX_HOLE_SIZE = 300.0f;
-const float MIN_HOLE_SIZE = 200.0f;
-const float PIPE_SPEED = 100.0f;
+const float MAX_HOLE_SIZE = 300.0f; ///< 水管最大空隙大小
+const float MIN_HOLE_SIZE = 200.0f; ///< 水管最小空隙大小
+const float PIPE_SPEED = 100.0f; ///< 水管移动速度
 
 extern float screenWidth;
 extern float screenHeight;
 
+/**
+ * @brief 创建水管对象
+ * 
+ * @param settings 配置文件
+ */
 Pipe::Pipe(const nlohmann::json& settings)
 {
   if (!texture_.loadFromFile(settings["pipe_img_path"]))
@@ -43,6 +57,9 @@ Pipe::Pipe(const nlohmann::json& settings)
   // bottomCollisionRect_.setOutlineThickness(1.0f);
 }
 
+/**
+ * @brief 开始生成水管
+ */
 void Pipe::start()
 {
   std::mt19937 rng(std::random_device{}());
@@ -60,6 +77,11 @@ void Pipe::start()
   bottomCollisionRect_.setPosition(bottomSprite_.getPosition());
 }
 
+/**
+ * @brief 更新水管状态
+ * 
+ * @param deltaTime 时间间隔
+ */
 void Pipe::update(const sf::Time& deltaTime)
 {
   sf::Vector2f position = topSprite_.getPosition();
@@ -73,6 +95,12 @@ void Pipe::update(const sf::Time& deltaTime)
   bottomCollisionRect_.setPosition(position);
 }
 
+/**
+ * @brief 绘制水管
+ * 
+ * @param target 目标渲染对象
+ * @param states 渲染状态
+ */
 void Pipe::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   target.draw(topSprite_, states);
@@ -81,21 +109,42 @@ void Pipe::draw(sf::RenderTarget& target, sf::RenderStates states) const
   target.draw(bottomCollisionRect_, states);
 }
 
+/**
+ * @brief 水管是否已经离开屏幕
+ * 
+ * @return true 离开屏幕
+ * @return false 没有离开屏幕
+ */
 bool Pipe::isOffScreen() const
 {
   return topSprite_.getPosition().x < -topSprite_.getGlobalBounds().width;
 }
 
+/**
+ * @brief 获取水管的右上角位置
+ * 
+ * @return sf::Vector2f 水管的右上角位置
+ */
 sf::Vector2f Pipe::getBottomRightPosition() const
 {
   return bottomSprite_.getPosition();
 }
 
+/**
+ * @brief 获取上方水管的碰撞矩形
+ * 
+ * @return sf::RectangleShape 上方水管的碰撞矩形
+ */
 sf::RectangleShape Pipe::getTopCollisionRect() const
 {
   return topCollisionRect_;
 }
 
+/**
+ * @brief 获取下方水管的碰撞矩形
+ * 
+ * @return sf::RectangleShape 下方水管的碰撞矩形
+ */
 sf::RectangleShape Pipe::getBottomCollisionRect() const
 {
   sf::RectangleShape rect;

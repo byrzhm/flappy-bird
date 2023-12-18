@@ -1,3 +1,13 @@
+/**
+ * @file score_board.h
+ * @author Hongming Zhu (zhm1019@qq.com)
+ * @brief 积分板类声明
+ * @version 0.1.0
+ * @date 2023-12-18
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -5,16 +15,20 @@
 
 namespace ZHMGAME001 {
 
-class ScoreBoard : public sf::Drawable {
+/**
+ * @brief 积分板类
+ */
+class ScoreBoard : public sf::Drawable
+{
 public:
   ScoreBoard() = default;
-  explicit ScoreBoard(const nlohmann::json &settings);
+  explicit ScoreBoard(const nlohmann::json& settings);
 
   void start();
 
   void update(bool scored);
 
-  void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+  void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
   void incrementScore();
@@ -25,4 +39,4 @@ private:
   int score_{0};
 };
 
-} // namespace ZHMGAME001
+}  // namespace ZHMGAME001
